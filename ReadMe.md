@@ -1,6 +1,7 @@
 # Adam and Eve
 ---
-The Dell Latitude E6530 laptop has been wiped and had Debian13 installed at the time of writing. The goal of project "Adam and Eve" is simple: make an old laptop, which used to sit in the drawer reminiscent of it's glory days, a usable server/homelab. It should be able to:
+My Dell Latitude E6530 laptop has been wiped and has Debian13 installed at the time of writing this.
+The goal of project "Adam and Eve" is simple: make an old laptop, which used to sit in the drawer reminiscent of it's glory days, into a usable server/homelab. It should be able to:
 1. Run at least one VM where I would practise my labs for the RHCSA.
 2. Act as storage for automated backups (mobile phone, laptop, personal computer)
 3. Host media (photos for now)
@@ -18,7 +19,8 @@ After installing Debian and setting up an admin account, I immediately disabled 
 ```bash
 sudo systemctl set-default multi-user.target
 ```
-Why? I believe learning the CLI is one of the most important skills an IT proffesional could have. It takes some getting used to if you're used to GUI solutions Windows and MacOS have, but the ever so sweet fruits of learning CLI are worth it.
+Why? I believe learning the CLI is one of the most important skills an IT professional could have. It will take some time if you're used to GUI solutions Windows and MacOS have,
+but the ever so sweet fruits of learning CLI are worth it.
 A cool hostname and a static IP is needed to reliably SSH into the server without worrying about a changed IP:
 ```bash
 hostnamectl hostname eve
@@ -45,7 +47,7 @@ ssh-keygen -t ed25519
 ssh-copy-id -i ~/.ssh/id_ed25519.pub domantas@192.168.1.153
 ```
 
-Since writing out ssh domantas@192.168.1.153 every time is cumbersome, I edited the ssh config inside ~/.ssh/config:
+Since writing out `ssh domantas@192.168.1.153` every time is cumbersome, I edited the ssh config inside `~/.ssh/config`:
 ```bash
 Host eve
     Hostname 192.168.1.153
@@ -60,7 +62,7 @@ Since a server shouldn't ever go to sleep on it's own, I turned off all the ways
 ```bash
 sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 ```
-I also learnt that masking creates a symlink to /dev/null, which in turn makes a service impossible to start, contrary to disabling a service.
+I also learnt that masking creates a symlink to `/dev/null`, which in turn makes a service impossible to start, contrary to disabling a service.
 
 The next action I did was enabling Wake on Lan in my server's BIOS and editing my debiandell profile:
 ```bash
@@ -70,7 +72,7 @@ Ether-wake had to be installed into my main laptop to user WoL:
 ```bash
 sudo dnf install ether-wake
 ```
-Then the command which turns on the server was put inside /usr/local/bin/wakeserver.sh
+Then the command which turns on the server was put inside `/usr/local/bin/wakeserver.sh`
 ```bash
 #!/bin/bash
 sudo ether-wake -D d4:be:d9:86:08:e9
@@ -84,5 +86,6 @@ sudo apt install cockpit
 systemctl enable cockpit
 systemctl start cockpit
 ```
-Using Cockpit is easy, just type `host:9090' into an internet browsers search bar (replace host with your actual host) and type in your login details when prompted.
-Inside the Cockpit there are a couple of sections which let me quickly see how's my server doing. Of course, the server is not doing anything meaningful for now, so I'll get back to Cockpit when it's needed.
+Using Cockpit is easy, just type `host:9090` into an internet browsers search bar (replace host with your actual host) and type in your login details when prompted.
+Inside the Cockpit there are a couple of sections which let me quickly see how's my server doing.
+Of course, the server is not doing anything meaningful for now, so I'll get back to Cockpit when it's needed.
