@@ -75,3 +75,14 @@ Then the command which turns on the server was put inside /usr/local/bin/wakeser
 #!/bin/bash
 sudo ether-wake -D d4:be:d9:86:08:e9
 ```
+
+## GUI server overview
+Up until this point I've only heard of Cockpit. So after some reading i decided to install it, since a simple server overview will definetely be useful in the future.
+```bash
+sudo apt install cockpit
+
+systemctl enable cockpit
+systemctl start cockpit
+```
+Using Cockpit is easy, just type `host:9090' into an internet browsers search bar (replace host with your actual host) and type in your login details when prompted.
+Inside the Cockpit there are a couple of sections which let me quickly see how's my server doing. Of course, the server is not doing anything meaningful for now, so I'll get back to Cockpit when it's needed.
