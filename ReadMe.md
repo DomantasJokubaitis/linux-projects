@@ -17,7 +17,6 @@ As mentioned in the beginning, the server has Debian13 installed after experienc
 After installing Debian and setting up an admin account, I immediately disabled the Gnome GUI using the command below.
 ```bash
 sudo systemctl set-default multi-user.target
-# Sets the default target when booting up to CLI
 ```
 Why? I believe learning the CLI is one of the most important skills an IT proffesional could have. It takes some getting used to if you're used to GUI solutions Windows and MacOS have, but the ever so sweet fruits of learning CLI are worth it.
 A cool hostname and a static IP is needed to reliably SSH into the server without worrying about a changed IP:
@@ -31,7 +30,7 @@ sudo nmcli con delete "Wired connection 1"
 
 sudo nmcli con up debiandell 
 ```
-Afterwards I installed and enabled ssh.
+Afterwards I installed and enabled SSH.
 ```bash
 sudo apt install ssh
 
@@ -44,16 +43,35 @@ From my main laptop:
 cd ~/.ssh
 ssh-keygen -t ed25519
 ssh-copy-id -i ~/.ssh/id_ed25519.pub domantas@192.168.1.153
+```
 
-```
-Since I didn't want to bother writing out ssh domantas@192.168.1.153 every time, I edited the ssh config:
-```bash
-vim ~/.ssh/config
-```
-Inside the file:
+Since writing out ssh domantas@192.168.1.153 every time is cumbersome, I edited the ssh config inside ~/.ssh/config:
 ```bash
 Host eve
     Hostname 192.168.1.153
     User domantas
     IdentityFile ~/.ssh/id_ed25519
+```
+
+Now it's possible to SSH into the server by only writing `ssh eve`, great!
+
+## A few tweaks
+Since a server shouldn't ever go to sleep on it's own, I turned off all the ways for the server to do so:
+```bash
+sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+```
+I also learnt that masking creates a symlink to /dev/null, which in turn makes a service impossible to start, contrary to disabling a service.
+
+The next action I did was enabling Wake on Lan in my server's BIOS and editing my debiandell profile:
+```bash
+sudo nmcli con mod debiandell 802-3-ethernet.wake-on-lan magic
+```
+Ether-wake had to be installed into my main laptop to user WoL:
+```bash
+sudo dnf install ether-wake
+```
+Then the command which turns on the server was put inside /usr/local/bin/wakeserver.sh
+```bash
+#!/bin/bash
+sudo ether-wake -D d4:be:d9:86:08:e9
 ```
