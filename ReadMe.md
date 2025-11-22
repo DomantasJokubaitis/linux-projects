@@ -78,7 +78,7 @@ Then the command which turns on the server was put inside `/usr/local/bin/wakese
 sudo ether-wake -D d4:be:d9:86:08:e9
 ```
 
-## GUI server overview
+## Cockpit
 Up until this point I've only heard of Cockpit. So after some reading i decided to install it, since a simple server overview will definetely be useful in the future.
 ```bash
 sudo apt install cockpit
@@ -89,3 +89,13 @@ systemctl start cockpit
 Using Cockpit is easy, just type `host:9090` into an internet browsers search bar (replace host with your actual host) and type in your login details when prompted.
 Inside the Cockpit there are a couple of sections which let me quickly see how's my server doing.
 Of course, the server is not doing anything meaningful for now, so I'll get back to Cockpit when it's needed.
+
+## Virtualization
+The RHCSA preperation book I'm reading (RHCSA9 Certification Guide by Sander Van Vugt) requires me to have RHEL9 installed.
+I've always user VirtualBox on my main Fedora43 laptop, but it's rather simple and rarely used in enterprise environments.
+I decided that KVM/QEMU is what's needed in my life, and boy it's definetely not as intuitative.
+Maybe it's the fact that I've never used CLI virtualization software outside of `VBoxManage`.
+Storage pools? Editing the XML file? Virsh?
+> To get started I used a guide which could be found here:
+https://www.freecodecamp.org/news/turn-ubuntu-2404-into-a-kvm-hypervisor/#heading-before-you-start-what-you-should-know
+It's meant for Ubuntu but can still be used for systems running Debian.
