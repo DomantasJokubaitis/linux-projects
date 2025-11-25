@@ -81,7 +81,7 @@ sudo ether-wake -D d4:be:d9:86:08:e9
 ## Cockpit
 Up until this point I've only heard of Cockpit. So after some reading i decided to install it, since a simple server overview will definetely be useful in the future.
 ```bash
-sudo apt install cockpit
+sudo apt install cockpit cockpit-machines -y
 
 systemctl enable cockpit
 systemctl start cockpit
@@ -115,4 +115,31 @@ sudo nmcli con add type bridge ifname br0 con-name bridge-br0
 sudo nmcli con add type ethernet ifname eno1 master br0 con-name bridge-slave-en0
 sudo nmcli con mod bridge-br0 gw4 192.168.1.254 ipv4.dns "8.8.8.8 8.8.4.4"
 ```
+Delete the old connection and activate the new connection:
+```bash
+sudo nmcli con down debiandell && sudo nmcli con delete debiandell
+sudo nmcli con up bridge-br0
+```
+Now we need to define the new bridge in libvirt via `vim ~/br0.xml`:
+```xml
+<network>
+  <name>br0</name>
+  <forward mode='bridge'/>
+  <bridge name='br0'/>
+</network>
+```
+```bash
+sudo virsh net-define ~/br0.xml
+sudo virsh net-start br0
+sudo virsh net-autostart br0
 
+sudo virsh net-list all
+```
+I ran into a problem later on that my xml contained multiple network segments.
+That's why if the virtual machine has trouble starting because of networking errors the xml should be checked.
+It should contain only the network segment defined before.
+I also ran into the biggest problem so far - all of the vm's I created would either loop in the GRUB screen or 
+look like they installed fine but there was no interface.
+I fixed it by setting a new storage pool as my default, even though I thought that deleting the default pool and creating
+a new one would work. Spoiler - don't do that, it took literal days to figure out what was wrong.
+The fix is actually very simple, [this](https://serverfault.com/questions/840519/how-to-change-the-default-storage-pool-from-libvirt) thread fixed it. To summarize, you just need to define the non-default storage pool as the default via `virsh pool-define-as'
