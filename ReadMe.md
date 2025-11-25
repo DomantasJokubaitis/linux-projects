@@ -138,8 +138,21 @@ sudo virsh net-list all
 I ran into a problem later on that my xml contained multiple network segments.
 That's why if the virtual machine has trouble starting because of networking errors the xml should be checked.
 It should contain only the network segment defined before.
-I also ran into the biggest problem so far - all of the vm's I created would either loop in the GRUB screen or 
-look like they installed fine but there was no interface.
-I fixed it by setting a new storage pool as my default, even though I thought that deleting the default pool and creating
-a new one would work. Spoiler - don't do that, it took literal days to figure out what was wrong.
-The fix is actually very simple, [this](https://serverfault.com/questions/840519/how-to-change-the-default-storage-pool-from-libvirt) thread fixed it. To summarize, you just need to define the non-default storage pool as the default via `virsh pool-define-as'
+
+I also ran into the biggest problem so far - all of the vm's I created would either
+loop in the GRUB screen or look like they installed fine but there was no interface.
+I tried to fix it by setting a new storage pool as my default, even though I thought that 
+deleting the default pool and creating a new one would work.
+Spoiler - don't do that, it took literal days to figure out what was wrong.
+To set a new default storage pool, read [this](https://serverfault.com/questions/840519/how-to-change-the-default-storage-pool-from-libvirt).
+
+To summarize, you just need to define the non-default storage pool as the default via
+`virsh pool-define-as`.
+The problems still didn't resolve. Lubuntu works, but RHEL just doesn't boot.
+I also tried changing BIOS to UEFI just before installing a VM in Cockpit. Now RHEL and it's forks
+that were tried all get stuck at the same booting screen.
+
+I don't have the solution for now, so I'm using a fedora server installation
+for the **RHCSA** preparation.
+Preparing the fedora VM for studying was the same as the debian server, the only thing 
+that's different is using `DNF` instead of `APT`.
