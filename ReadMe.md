@@ -109,3 +109,10 @@ sudo chmod -aG libvirt domantas
 ```
 So then I found out that a network bridge is needed so that virtual machines would be accessible by my fedora laptop.
 (pictures/networking-modes.png)
+The ethernet interface should be enslaved to the bridge, and the latter needs a static ip address
+```bash
+sudo nmcli con add type bridge ifname br0 con-name bridge-br0
+sudo nmcli con add type ethernet ifname eno1 master br0 con-name bridge-slave-en0
+sudo nmcli con mod bridge-br0 gw4 192.168.1.254 ipv4.dns "8.8.8.8 8.8.4.4"
+```
+
