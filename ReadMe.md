@@ -96,6 +96,16 @@ I've always user VirtualBox on my main Fedora43 laptop, but it's rather simple a
 I decided that KVM/QEMU is what's needed in my life, and boy it's definetely not as intuitative.
 Maybe it's the fact that I've never used CLI virtualization software outside of `VBoxManage`.
 Storage pools? Editing the XML file? Virsh?
-> To get started I used a guide which could be found here:
-https://www.freecodecamp.org/news/turn-ubuntu-2404-into-a-kvm-hypervisor/#heading-before-you-start-what-you-should-know
+> To get started I used a guide which could be found [here](https://www.freecodecamp.org/news/turn-ubuntu-2404-into-a-kvm-hypervisor)
 It's meant for Ubuntu but can still be used for systems running Debian.
+>
+First and foremost, I installed mandatory libraries:
+```bash
+sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils -y
+```
+Then added myself to the libvirt group:
+```bash
+sudo chmod -aG libvirt domantas
+```
+So then I found out that a network bridge is needed so that virtual machines would be accessible by my fedora laptop.
+(pictures/networking-modes.png)
