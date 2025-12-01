@@ -15,8 +15,8 @@ for a specific use case, for example: *c-development*, *kde-desktop*.
 - `dnf autoremove` - removes packages that are not needed.
 - `dnf clean all` - cleans cached files and metadata.
 ---
-A **module** describes a set of RPM packages that belong together.
+A **module** describes a set of RPM packages that belong together. \
 A **stream** contains one specific module version.
-By using streams different versions of packages can be offered through the same repositories.
+By using streams different versions of packages can be offered through the same repositories.\
 A **profile** is a list of packages that are installed together for a particular use case.
 For example: minimal, server, default profiles.
