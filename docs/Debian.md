@@ -1,18 +1,22 @@
 # Adam and Eve
 ---
-My Dell Latitude E6530 laptop has been wiped and has Debian13 installed at the time of writing this.
-The goal of project "Adam and Eve" is simple: make an old laptop, which used to sit in the drawer reminiscent of it's glory days, into a usable server/homelab. It should be able to:
-1. Run at least one VM where I would practise my labs for the RHCSA.
+My Dell Latitude E6530 laptop has been converted to a homelab.
+The goal of project "Adam and Eve" is simple: make an old laptop into a usable server/homelab. It should be able to:
+1. Run at least one VM where I would practise labs for the RHCSA.
 2. Act as storage for automated backups (mobile phone, laptop, personal computer)
 3. Host media (photos for now)
 
-For targets 2 and 3 a new, bigger capacity Solid State Drive might be needed as the current SSD's capacity is 120GB
+## Hardware problems
+The homelab contains a 120GB SSD, which is very small for todays standarts, especially for a homelab.
+The 750GB HDD is more than a decade old and isn't reliable enough to hold data.
+8GB of DDR3 ram is only enough for about 3 virtual machines.
 
 ## Project name
-I chose the name "Adam and Eve" not because of biblical context. "Eve" symbolizes a place where I grew up, and "Adam" is the most famous pair for "Eve".
+I chose the name "Adam and Eve" not because of biblical context. "Eve" symbolizes a place where I grew up, and it's only natural to think about "Adam" when heard the name "Eve".
 
 ## Distro history
-As mentioned in the beginning, the server has Debian13 installed after experiences with Windows 7, 10, 11 and Fedora Linux 40-42. I chose Debian for it's well known stability, and to get to know something else after experience in only fedora-based distros and a short relationship with Arch.
+Eve (the homelab) curretly has Debian13 installed. It experienced Windows 7, 10, 11 and Fedora Linux 40-42.
+For homelab usage I chose Debian for it's well known stability, and to widen m knowledge after experience in only fedora-based distros and a short experience with Arch.
 
 ## First steps
 After installing Debian and setting up an admin account, I immediately disabled the Gnome GUI using the command below.
