@@ -1,7 +1,7 @@
-# Adam and Eve
+# A homelab project
 ---
 My Dell Latitude E6530 laptop has been converted to a homelab.
-The goal of project "Adam and Eve" is simple: make an old laptop into a usable server/homelab. It should be able to:
+The goal of this project is simple: make an old laptop into a usable server/homelab. It should be able to:
 1. Run at least one VM where I would practise labs for the RHCSA.
 2. Act as storage for automated backups (mobile phone, laptop, personal computer)
 3. Host media (photos for now)
@@ -11,30 +11,26 @@ The homelab contains a 120GB SSD, which is very small for todays standarts, espe
 The 750GB HDD is more than a decade old and isn't reliable enough to hold data.
 8GB of DDR3 ram is only enough for about 3 virtual machines.
 
-## Project name
-I chose the name "Adam and Eve" not because of biblical context. "Eve" symbolizes a place where I grew up, and it's only natural to think about "Adam" when heard the name "Eve".
-
 ## Distro history
-Eve (the homelab) curretly has Debian13 installed. It experienced Windows 7, 10, 11 and Fedora Linux 40-42.
-For homelab usage I chose Debian for it's well known stability, and to widen m knowledge after experience in only fedora-based distros and a short experience with Arch.
+The homelab curretly has Debian13 installed. It experienced Windows 7, 10, 11 and Fedora Linux 40-42.
+I chose Debian for the server for it's well known stability, and to widen m knowledge after experience in only fedora-based distros and a short experience with Arch.
 
 ## First steps
 After installing Debian and setting up an admin account, I immediately disabled the Gnome GUI using the command below.
 ```bash
 sudo systemctl set-default multi-user.target
 ```
-Why? I believe learning the CLI is one of the most important skills an IT professional could have. It will take some time if you're used to GUI solutions Windows and MacOS have,
-but the ever so sweet fruits of learning CLI are worth it.
-A cool hostname and a static IP is needed to reliably SSH into the server without worrying about a changed IP:
+I believe learning the CLI is one of the most important skills an IT professional could have. It will take some time if you're used to GUI Windows and MacOS.
+A hostname and a static IP is needed to reliably SSH into the server without worrying about a changed IP:
 ```bash
-hostnamectl hostname eve
+hostnamectl hostname host
 
-sudo nmcli con add type ethernet con-name debiandell ifname eno1 ip4 192.168.1.153/24 gw4 192.168.1.254 \ ipv4.dns "8.8.8.8 8.8.4.4"
+sudo nmcli con add type ethernet con-name eth-name ifname eno1 ip4 100.200.30.40/24 gw4 100.200.30.41 \ ipv4.dns "8.8.8.8 8.8.4.4"
 
 nmcli con down "Wired connection 1"
 sudo nmcli con delete "Wired connection 1"
 
-sudo nmcli con up debiandell 
+sudo nmcli con up eth-name 
 ```
 Afterwards I installed and enabled SSH.
 ```bash
@@ -44,42 +40,42 @@ sudo systemctl enable sshd.service
 sudo systemctl start sshd.service
 ```
 
-From my main laptop:
+From the server:
 ```bash
 cd ~/.ssh
 ssh-keygen -t ed25519
-ssh-copy-id -i ~/.ssh/id_ed25519.pub domantas@192.168.1.153
+ssh-copy-id -i ~/.ssh/id_ed25519.pub host@100.200.30.40
 ```
 
-Since writing out `ssh domantas@192.168.1.153` every time is cumbersome, I edited the ssh config inside `~/.ssh/config`:
+Since writing out `ssh host@100.200.30.40` every time is cumbersome, I edited the ssh config inside `~/.ssh/config`:
 ```bash
 Host eve
-    Hostname 192.168.1.153
-    User domantas
+    Hostname host
+    User person
     IdentityFile ~/.ssh/id_ed25519
 ```
 
-Now it's possible to SSH into the server by only writing `ssh eve`, great!
+Now it's possible to SSH into the server by writing `ssh eve`
 
-## A few tweaks
+## Power tweaks
 Since a server shouldn't ever go to sleep on it's own, I turned off all the ways for the server to do so:
 ```bash
 sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 ```
-I also learnt that masking creates a symlink to `/dev/null`, which in turn makes a service impossible to start, contrary to disabling a service.
+Masking a target creates a symlink to `/dev/null`, which in turn makes a service impossible to start, contrary to disabling a service, where it's still possible to start under the right conditions.
 
-The next action I did was enabling Wake on Lan in my server's BIOS and editing my debiandell profile:
+The next action I did was enabling Wake on Lan in my server's BIOS and editing my eth-name profile:
 ```bash
-sudo nmcli con mod debiandell 802-3-ethernet.wake-on-lan magic
+sudo nmcli con mod eth-name 802-3-ethernet.wake-on-lan magic
 ```
-Ether-wake had to be installed into my main laptop to user WoL:
+Ether-wake had to be installed into my workstation for WoL:
 ```bash
 sudo dnf install ether-wake
 ```
 Then the command which turns on the server was put inside `/usr/local/bin/wakeserver.sh`
 ```bash
 #!/bin/bash
-sudo ether-wake -D d4:be:d9:86:08:e9
+sudo ether-wake -D a1:b2:c3:d4:e5:f6
 ```
 
 ## Cockpit
@@ -108,7 +104,7 @@ sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils -y
 ```
 Then added myself to the libvirt group:
 ```bash
-sudo chmod -aG libvirt domantas
+sudo chmod -aG libvirt user
 ```
 So then I found out that a network bridge is needed so that virtual machines would be accessible by my fedora laptop.
 ![Table with networking modes and their traits](pictures/networking-modes.png)
@@ -116,11 +112,11 @@ The ethernet interface should be enslaved to the bridge, and the latter needs a 
 ```bash
 sudo nmcli con add type bridge ifname br0 con-name bridge-br0
 sudo nmcli con add type ethernet ifname eno1 master br0 con-name bridge-slave-en0
-sudo nmcli con mod bridge-br0 gw4 192.168.1.254 ipv4.dns "8.8.8.8 8.8.4.4"
+sudo nmcli con mod bridge-br0 gw4 100.200.30.41 ipv4.dns "8.8.8.8 8.8.4.4"
 ```
 Delete the old connection and activate the new connection:
 ```bash
-sudo nmcli con down debiandell && sudo nmcli con delete debiandell
+sudo nmcli con down eth-name && sudo nmcli con delete eth-name
 sudo nmcli con up bridge-br0
 ```
 Now we need to define the new bridge in libvirt via `vim ~/br0.xml`:
