@@ -72,7 +72,7 @@ Ether-wake had to be installed into my workstation for WoL:
 ```bash
 sudo dnf install ether-wake
 ```
-Then a one-liner script which wakes the server was put inside `/usr/local/bin/wakeserver.sh`
+`/usr/local/bin/wakeserver.sh` script:
 ```bash
 #!/bin/bash
 sudo ether-wake -D a1:b2:c3:d4:e5:f6
@@ -103,9 +103,9 @@ Add user to the libvirt group:
 sudo chmod -aG libvirt user
 ```
 A network bridge is needed for virtual machines would be accessible from the workstation.
-The table below show different networking options that could be used for virtualization purposes.
+The table below shows different networking options that could be used for virtualization purposes.
 ![Table with networking modes and their traits](pictures/networking-modes.png)
-The ethernet interface should be enslaved to the bridge, and the latter needs a static ip address
+The ethernet interface should be enslaved to the bridge, and the latter needs a static ip address:
 ```bash
 sudo nmcli con add type bridge ifname br0 con-name bridge-br0
 sudo nmcli con add type ethernet ifname eno1 master br0 con-name bridge-slave-en0
