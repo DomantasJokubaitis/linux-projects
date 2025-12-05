@@ -29,5 +29,17 @@ RPM doesn't automatically install dependencies like DNF.
 It also doesn't update the DNF database when installing software using the
 RPM command.
 
+## RPM flags
+- `RPM -qa` - lists installed packages.
+- `RPM -qi` - shows package description.
+- `RPM -ql` - lists all files in a package.
+- `RPM -qd` - shows all documentation for a package.
+- `RPM -qc` - shows all configuration files in the package.
+- `RPM -qf` - shows the package a file belongs to.
+- `RPM -qp --scripts` - queries the package file, not the RPM database,
+and looks what scripts it has, if any.
+- `RPM -qR` - lists package dependencies.
+- `RPM -Va` - shows which parts of the package have been changed since installation and verifies all installed packages.
+
 
 
