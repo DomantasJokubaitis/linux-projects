@@ -1,7 +1,7 @@
 # Debian Homelab
 
-This repository documents my homelab which is built on a headless Debian server.
-Included: system configuration, virtualization setup, networking, troubleshooting.
+This repository documents my homelab which is built on a headless Debian server. \
+**Included**: system configuration, virtualization setup, networking, troubleshooting.
 
 ## Contents
 - `docs` - Server documentation
