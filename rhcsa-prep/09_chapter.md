@@ -1,4 +1,6 @@
-# DNF commands
+# Managing software
+---
+## DNF commands
 - `dnf install [argument]` - installs a package.
 - `dnf up [argument]` - updates a package.
 - `dnf remove [argument]` - removes a package.
@@ -20,3 +22,12 @@ A **stream** contains one specific module version.
 By using streams different versions of packages can be offered through the same repositories.\
 A **profile** is a list of packages that are installed together for a particular use case.
 For example: minimal, server, default profiles.
+
+# RPM
+## RPM vs DNF
+RPM doesn't automatically install dependencies like DNF.
+It also doesn't update the DNF database when installing software using the
+RPM command.
+
+
+
