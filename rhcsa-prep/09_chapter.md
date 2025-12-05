@@ -47,6 +47,3 @@ RPM command.
 and looks what scripts it has, if any.
 - `RPM -qR` - lists package dependencies.
 - `RPM -Va` - shows which parts of the package have been changed since installation and verifies all installed packages.
-
-
-
