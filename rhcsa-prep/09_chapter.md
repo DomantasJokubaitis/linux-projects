@@ -23,7 +23,14 @@ By using streams different versions of packages can be offered through the same 
 A **profile** is a list of packages that are installed together for a particular use case.
 For example: minimal, server, default profiles.
 
-# RPM
+## Creating your own repository
+1. `dnf install createrepo_c`
+2. Possess a directory with .rpm files
+3. `dnf config-manager --add-repo=file:///path/to/directory`
+4. Edit `/etc/yum.repos.d/directory.repo` and set `gpgcheck=0`
+5. `createrepo path/to/directory`
+6. `dnf repolist`
+
 ## RPM vs DNF
 RPM doesn't automatically install dependencies like DNF.
 It also doesn't update the DNF database when installing software using the
