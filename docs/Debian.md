@@ -1,19 +1,19 @@
 # A homelab project
 ---
-My Dell Latitude E6530 laptop has been converted to a homelab.
+A Dell Latitude E6530 laptop has been converted to a homelab.
 The goal of this project is simple: make an old laptop into a usable server/homelab. It should be able to:
 1. Run at least one VM where I would practise labs for the RHCSA.
 2. Act as storage for automated backups (mobile phone, laptop, personal computer)
 3. Host media (photos for now)
 
 ## Hardware problems
-The homelab contains a 120GB SSD, which is very small for todays standarts, especially for a homelab.
+The homelab contains a 120GB SSD, which is very small for todays standarts, especially for a server.
 The 750GB HDD is more than a decade old and isn't reliable enough to hold data.
-8GB of DDR3 ram is only enough for about 3 virtual machines.
+8GB of DDR3 RAM is only enough for about 3 virtual machines.
 
 ## Distro history
-The homelab curretly has Debian13 installed. It experienced Windows 7, 10, 11 and Fedora Linux 40-42.
-I chose Debian for the server for it's well known stability, and to widen m knowledge after experience in only fedora-based distros and a short experience with Arch.
+Debian13 was the distribution of choice. The server previously experienced Windows 7, 10, 11 and Fedora Linux 40-42.
+Debian was chosen for it's well known stability, and to widen my personal knowledge after experience in only fedora based distros and a short experience with Arch.
 
 ## First steps
 After installing Debian and setting up an admin account, I immediately disabled the Gnome GUI using the command below.
@@ -58,13 +58,13 @@ Host eve
 Now it's possible to SSH into the server by writing `ssh eve`
 
 ## Power tweaks
-Since a server shouldn't ever go to sleep on it's own, I turned off all the ways for the server to do so:
+Since a server shouldn't ever go down on it's own, any form of sleep and hibernation must be disabled:
 ```bash
 sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 ```
 Masking a target creates a symlink to `/dev/null`, which in turn makes a service impossible to start, contrary to disabling a service, where it's still possible to start under the right conditions.
 
-The next action I did was enabling Wake on Lan in my server's BIOS and editing my eth-name profile:
+The next action was enabling Wake on Lan in the server's BIOS and editing the eth-name profile:
 ```bash
 sudo nmcli con mod eth-name 802-3-ethernet.wake-on-lan magic
 ```
@@ -72,41 +72,38 @@ Ether-wake had to be installed into my workstation for WoL:
 ```bash
 sudo dnf install ether-wake
 ```
-Then the command which turns on the server was put inside `/usr/local/bin/wakeserver.sh`
+Then a one-liner script which wakes the server was put inside `/usr/local/bin/wakeserver.sh`
 ```bash
 #!/bin/bash
 sudo ether-wake -D a1:b2:c3:d4:e5:f6
 ```
 
 ## Cockpit
-Up until this point I've only heard of Cockpit. So after some reading i decided to install it, since a simple server overview will definetely be useful in the future.
+Cockpit is a server monitoring tool which shows general system information, performance metrics, virtual machines, etc.
+To use Cockpit it has to be installed and enabled on the server:
 ```bash
 sudo apt install cockpit cockpit-machines -y
 
 systemctl enable cockpit
 systemctl start cockpit
 ```
-Using Cockpit is easy, just type `host:9090` into an internet browsers search bar (replace host with your actual host) and type in your login details when prompted.
-Inside the Cockpit there are a couple of sections which let me quickly see how's my server doing.
-Of course, the server is not doing anything meaningful for now, so I'll get back to Cockpit when it's needed.
+To use Cockpit, you need to type `host:9090` into an internet browsers search bar (replace host with your actual host) and type in the server login details.
 
 ## Virtualization
-The RHCSA preperation book I'm reading (RHCSA9 Certification Guide by Sander Van Vugt) requires me to have RHEL9 installed.
-I've always user VirtualBox on my main Fedora43 laptop, but it's rather simple and rarely used in enterprise environments.
-I decided that KVM/QEMU is what's needed in my life, and boy it's definetely not as intuitative.
-Maybe it's the fact that I've never used CLI virtualization software outside of `VBoxManage`.
-Storage pools? Editing the XML file? Virsh?
+The RHCSA preperation book I'm reading (RHCSA9 Certification Guide by Sander Van Vugt) requires me to have a RHEL based distribution installed, so a decision on virtualization software was made.
+KVM/QEMU was chosen for it's near to native performance and light weight.
 > To get started I used a guide which could be found [here](https://www.freecodecamp.org/news/turn-ubuntu-2404-into-a-kvm-hypervisor)
 >It's meant for Ubuntu but can still be used for systems running Debian.
 First and foremost, I installed mandatory libraries:
 ```bash
 sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils -y
 ```
-Then added myself to the libvirt group:
+Add user to the libvirt group:
 ```bash
 sudo chmod -aG libvirt user
 ```
-So then I found out that a network bridge is needed so that virtual machines would be accessible by my fedora laptop.
+A network bridge is needed for virtual machines would be accessible from the workstation.
+The table below show different networking options that could be used for virtualization purposes.
 ![Table with networking modes and their traits](pictures/networking-modes.png)
 The ethernet interface should be enslaved to the bridge, and the latter needs a static ip address
 ```bash
@@ -119,7 +116,7 @@ Delete the old connection and activate the new connection:
 sudo nmcli con down eth-name && sudo nmcli con delete eth-name
 sudo nmcli con up bridge-br0
 ```
-Now we need to define the new bridge in libvirt via `vim ~/br0.xml`:
+Now a new network bridge must be defined in libvirt via `vim ~/br0.xml`:
 ```xml
 <network>
   <name>br0</name>
@@ -134,24 +131,19 @@ sudo virsh net-autostart br0
 
 sudo virsh net-list all
 ```
-I ran into a problem later on that my xml contained multiple network segments.
-That's why if the virtual machine has trouble starting because of networking errors the xml should be checked.
-It should contain only the network segment defined before.
+I ran into a problem where the virtual machines refused to start because of non-descriptive network errors.
+The solution was to edit the xml mentioned before, and delete any other network sections that it has. Redefine after this step. 
 
-I also ran into the biggest problem so far - all of the vm's I created would either
-loop in the GRUB screen or look like they installed fine but there was no interface.
-I tried to fix it by setting a new storage pool as my default, even though I thought that 
-deleting the default pool and creating a new one would work.
-Spoiler - don't do that, it took literal days to figure out what was wrong.
+Another problem that I encountered - all of the created vm's would either
+loop in the GRUB screen or would freeze after "succesfully" booting.
+The fix I found was to redefine the default storage pool. The default pool has too little space for one virtual machine.
 To set a new default storage pool, read [this](https://serverfault.com/questions/840519/how-to-change-the-default-storage-pool-from-libvirt).
 
 To summarize, you just need to define the non-default storage pool as the default via
 `virsh pool-define-as`.
-The problems still didn't resolve. Lubuntu works, but RHEL just doesn't boot.
-I also tried changing BIOS to UEFI just before installing a VM in Cockpit. Now RHEL and it's forks
-that were tried all get stuck at the same booting screen.
+
+Unfortunately no RHEL-based distros, including CentOS, AlmaLinux, RockyLinux work as virtual machines.
+I tried changing BIOS mode to UEFI for the virtual machines, but that didn't help.
 
 I don't have the solution for now, so I'm using a fedora server installation
 for the **RHCSA** preparation.
-Preparing the fedora VM for studying was the same as the debian server, the only thing 
-that's different is using `DNF` instead of `APT`.
