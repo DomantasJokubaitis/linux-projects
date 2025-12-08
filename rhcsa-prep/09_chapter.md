@@ -58,18 +58,24 @@ are **no dependency conflicts** between different applications.
 
 Most popular formats:
 1. Snap:
-    - Developed by Canonical
-    - Packages are listed on Snap Store
-    - Has a daemon, snapd, which can be interected using `snap`
-    - It automatically checks for application updates in the background
-2. Flatpak:
-    - Developed by Alexander Larsson
-    - Packages are listed on FlatHub
-    - Does not support automatic updates
-    - Decompressed on the client side
-3. AppImage:
-    - Developed by Simon Peter
-    - Packages are listed on AppImageHub
-    - Does not support automatic updates
-    - Package is executable on it's own
-    - By default is not sandboxed
+    - Developed by Canonical.
+    - Packages are listed on Snap Store.
+    - Has a daemon, snapd, which can be interected using `snap`.
+    - It automatically checks for application updates in the background.
+2. AppImage:
+    - Developed by Simon Peter.
+    - Packages are listed on AppImageHub.
+    - Does not support automatic updates.
+    - Package is executable on it's own.
+    - By default is not sandboxed.
+3. Flatpak:
+    - Developed by Alexander Larsson.
+    - Packages are listed on FlatHub.
+    - Does not support automatic updates.
+    - Decompressed on the client side.
+    - Basic commands:
+        1. `flatpak (un)install app_id`.
+        2. `flatpak run app_id`.
+        3. `flatpak search app`.
+        4. `flatpak update`.
+        5. `flatpak list`.
