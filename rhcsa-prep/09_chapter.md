@@ -1,19 +1,22 @@
 # Managing software
 ---
 ## DNF commands
-- `dnf install [argument]` - installs a package.
-- `dnf up [argument]` - updates a package.
-- `dnf remove [argument]` - removes a package.
-- `dnf search [argument]` - searches for a package.
-- `dnf info [argument]` - shows package info.
-- `dnf repolist` - shows which repositories are in use.
+- `dnf (re)install [package]` - (re)installs a package.
+- `dnf upgrade | downgrade [package]` - upgrades | downgrades a package.
+- `dnf remove [package]` - removes a package.
+- `dnf swap [package A package B]` - swaps package A for B.
+- `dnf search [package]` - searches for a package.
+- `dnf info [package]` - shows package info.
+- `dnf list --installed` - prints all installed packages.
 - `dnf provides [file]` - shows the package providing a specific file.
-- `dnf group {list (hidden)} {install | info [argument]` - allows the installation of multiple packages
-for a specific use case, for example: *c-development*, *kde-desktop*.
-- `dnf list {installed}` - prints all installed packages.
-- `dnf repoquery --list [argument]` - lists all files included in package.
-- `dnf repoquery --requires [argument]` - lists dependencies of a package.
-- `dnf history undo [argument]` - undoes an action.
+- `dnf repolist` - shows which repositories are in use.
+- `dnf repoquery --list [package]` - lists all files included in package.
+- `dnf repoquery --requires [package]` - lists dependencies of a package.
+- `dnf group {list (hidden)} {install | info [package]` - allows the installation \
+of multiple packages for a specific use case, for example: *c-development*.
+- `dnf history {list | info}` - lists | shows info about transactions.
+- `dnf history undo [id]` - undoes a transaction.
+- `dnf history rollback [id]` - undoes all transactions performed after a specified transaction.
 - `dnf autoremove` - removes packages that are not needed.
 - `dnf clean all` - cleans cached files and metadata.
 ---
@@ -33,10 +36,8 @@ For example: minimal, server, default profiles.
 6. `dnf repolist`
 
 ## RPM vs DNF
-RPM doesn't automatically install dependencies like DNF.
-It also doesn't update the DNF database when installing software using the
-RPM command.
-
+- **RPM** installs a single package and does not resolve dependencies.
+- **DNF** resolves dependencies, keeps transaction history and manages repos.
 ## RPM flags
 - `RPM -qa` - lists installed packages.
 - `RPM -qi` - shows package description.
