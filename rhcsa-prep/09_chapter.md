@@ -17,11 +17,12 @@ for a specific use case, for example: *c-development*, *kde-desktop*.
 - `dnf autoremove` - removes packages that are not needed.
 - `dnf clean all` - cleans cached files and metadata.
 ---
-A **module** describes a set of RPM packages that belong together. \
-A **stream** contains one specific module version.
+- A **module** describes a set of RPM packages that belong together.
+- A **stream** contains one specific module version.
 By using streams different versions of packages can be offered through the same repositories.\
-A **profile** is a list of packages that are installed together for a particular use case.
+- A **profile** is a list of packages that are installed together for a particular use case.
 For example: minimal, server, default profiles.
+- Repositority configuration is stored in /etc/yum.repos.d/
 
 ## Creating your own repository
 1. `dnf install createrepo_c`
@@ -47,3 +48,27 @@ RPM command.
 and looks what scripts it has, if any.
 - `RPM -qR` - lists package dependencies.
 - `RPM -Va` - shows which parts of the package have been changed since installation and verifies all installed packages.
+
+# Containerized application packaging formats
+
+Containerized application packaging formats pack required dependencies
+together with the application in the same package to ensure that there
+are **no dependency conflicts** between different applications.
+
+Most popular formats:
+1. Snap:
+    - Developed by Canonical
+    - Packages are listed on Snap Store
+    - Has a daemon, snapd, which can be interected using `snap`
+    - It automatically checks for application updates in the background
+2. Flatpak:
+    - Developed by Alexander Larsson
+    - Packages are listed on FlatHub
+    - Does not support automatic updates
+    - Decompressed on the client side
+3. AppImage:
+    - Developed by Simon Peter
+    - Packages are listed on AppImageHub
+    - Does not support automatic updates
+    - Package is executable on it's own
+    - By default is not sandboxed
