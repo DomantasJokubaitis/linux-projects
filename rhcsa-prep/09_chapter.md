@@ -19,10 +19,11 @@ of multiple packages for a specific use case, for example: *c-development*.
 - `dnf history rollback [id]` - undoes all transactions performed after a specified transaction.
 - `dnf autoremove` - removes packages that are not needed.
 - `dnf clean all` - cleans cached files and metadata.
----
+
+## DNF module terminology
 - A **module** describes a set of RPM packages that belong together.
 - A **stream** contains one specific module version.
-By using streams different versions of packages can be offered through the same repositories.\
+By using streams different versions of packages can be offered through the same repositories.
 - A **profile** is a list of packages that are installed together for a particular use case.
 For example: minimal, server, default profiles.
 - Repositority configuration is stored in /etc/yum.repos.d/
@@ -50,12 +51,11 @@ and looks what scripts it has, if any.
 - `RPM -qR` - lists package dependencies.
 - `RPM -Va` - shows which parts of the package have been changed since installation and verifies all installed packages.
 
-# Containerized application packaging formats
+## Containerized application packaging formats
 
 Containerized application packaging formats pack required dependencies
 together with the application in the same package to ensure that there
 are **no dependency conflicts** between different applications.
-
 Most popular formats:
 1. Snap:
     - Developed by Canonical.
