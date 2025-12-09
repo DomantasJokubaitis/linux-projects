@@ -22,3 +22,11 @@ A **thread** is a task started by a process and that a dedicated CPU can service
 - `bg` - continues the job that was paused.
 - `fg` - brings the last job moved to background to the foreground.
 - `jobs` - shows which jobs are running from the current shell.
+
+## The ps command
+    The most common command to get an overview of currently running \
+    processes is ps.
+    Flags:
+    - `ps -aux` - short summary of active processes.
+    - `ps -ef` - shows command that was used to start the process.
+    - `ps -fax` - shows hierarchical relationships between parent and child     processes.
