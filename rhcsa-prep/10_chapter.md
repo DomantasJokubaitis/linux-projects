@@ -2,8 +2,17 @@
 ## Proccess types
 
 1. Shell jobs.
+    - Commands started from the current shell.
+    - Also reffered to as interactive proccesses.
 2. Daemons.
+    - Processes that provide services.
+    - Normally start the a computer is booted.
+    - Often run with root privileges.
 3. Kernel threads.
+    - Part of the linux kernel.
+    - Cannot be managed using common tools.
+
+A **thread** is a task started by a process and that a dedicated CPU can service.
 ## Job managment overview
 
 - `& (used at the end of a command` - starts the command immediately in the background.
