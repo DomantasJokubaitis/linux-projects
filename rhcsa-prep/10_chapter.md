@@ -25,7 +25,23 @@
 ## The ps command
 
 The most common command to get an overview of currently running \
-processes is ps. Most notable flags:
+processes is `ps`. Most notable flags:
 - `ps -aux` - short summary of active processes.
 - `ps -ef` - shows command that was used to start the process.
-- `ps -fax` - shows hierarchical relationships between parent and child     processes.
+- `ps -fax` - shows hierarchical relationships between parent and child processes.
+## Cgroups
+
+Cgroups are used to allocate system resources. Three system ares, or slices, \
+are defined:
+1. System - where all systemd-managed processes are running.
+2. User - where all user (including root) processes are running.
+3. Machine - optional slice used for virtual machines and containers.
+
+By default, CPU capacity is uqually diveded between the slices when there is \
+high demand.
+To temporarily shut down a CPU core, use the command:
+```echo 0 > /sys/bus/cpu/devices/cpu1/online```
+Replace the number for the CPU core you want to shut down.
+## Process priority
+
+- By default, processes are started with priority number 20.
