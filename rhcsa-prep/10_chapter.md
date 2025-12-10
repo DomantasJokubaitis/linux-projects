@@ -59,3 +59,17 @@ Replace the number for the CPU core you want to shut down.
 - Zombie processes have completed execution but are still listed in the process table
     - Harmless.
     - Can be removed by sending SIGCHLD or SIGKILL to their parents.
+## Top and other information commands
+
+- `top` is a tool to overview and manage processes.
+- It shows process states, which are as follows:
+    1. Running (R)
+    2. Sleeping (S)
+    3. Uninterruptible sleep (D)
+    4. Stopped (T)
+    5. Zombie (Z)
+- Has useful keybinds, such as `k` for `kill` and `r` for `renice`.
+
+- `lscpu` prints cpu information.
+- `uptime` prints current load average statistics.
+
