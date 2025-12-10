@@ -95,3 +95,8 @@ Profile overview:
 - `tuned-adm list` - prints overview of available profiles.
 - `tuned-adm profile [PROFILE]` - select profile.
 - `tuned-adm recommend` - prints recommended profile.
+
+# Extra information
+## Process forking
+
+
