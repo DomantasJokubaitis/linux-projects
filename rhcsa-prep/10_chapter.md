@@ -55,7 +55,8 @@ By default, processes are started with priority number 20.
 Most common `kill` values:
 1. SIGTERM (15) to ask a process to stop.
 2. SIGKILL (9) to force a process to stop.
-3. SIGHUP (1) to hang up a process, used to reread its configuration files. \
+3. SIGHUP (1) to hang up a process, used to reread its configuration files.
+
 Zombie processes have completed execution but are still listed in the process table
     - Harmless.
     - Can be removed by sending SIGCHLD or SIGKILL to their parents.
