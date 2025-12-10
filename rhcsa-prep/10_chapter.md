@@ -61,7 +61,7 @@ Replace the number for the CPU core you want to shut down.
     - Can be removed by sending SIGCHLD or SIGKILL to their parents.
 ## Top and other information commands
 
-- `top` is a tool to overview and manage processes.
+`top` is a tool to overview and manage processes.
 - It shows process states, which are as follows:
     1. Running (R)
     2. Sleeping (S)
@@ -72,4 +72,24 @@ Replace the number for the CPU core you want to shut down.
 
 - `lscpu` prints cpu information.
 - `uptime` prints current load average statistics.
+## Tuned
 
+- `tuned` offers a daemon that monitors system activity and provides profiles for \
+best possible latency, throughput or power consumption.
+
+Profile overview:
+- `balanced` - best compromise between power consumption and performance.
+- `desktop` - better response to interactive applications.
+- `latency-performace` - maximum throughput.
+- `network-latency` - additional options to reduce network latency.
+- `network-throughput` - optimizes older CPUs for streaming content.
+- `powersave` - maximum power saving.
+- `throughput-performance` - maximum throughput.
+- `virtual-guest` - for running as a virtual machine.
+- `virtual-host` - for use as a KVM host. 
+
+`tuned-adm` is a command used to manage performace profiles.
+- `tuned-adm active` - prints selected performace profile.
+- `tuned-adm list` - prints overview of available profiles.
+- `tuned-adm profile [PROFILE]` - select profile.
+- `tuned-adm recommend` - prints recommended profile.
