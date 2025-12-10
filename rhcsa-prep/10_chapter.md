@@ -45,3 +45,8 @@ Replace the number for the CPU core you want to shut down.
 ## Process priority
 
 - By default, processes are started with priority number 20.
+- `nice` is used to start a process with an adjusted priority.
+- `renice` is used to change the priority of a currently active process.
+    - Both accept values between -20 and 19, where higher value = decreased priority.
+
+## Killing processes
