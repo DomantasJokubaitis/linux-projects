@@ -1,9 +1,9 @@
 # Managing processes
-## Proccess types
+## Process types
 
 1. Shell jobs.
     - Commands started from the current shell.
-    - Also reffered to as interactive proccesses.
+    - Also referred to as interactive processes.
 2. Daemons.
     - Processes that provide services.
     - Normally start the a computer is booted.
@@ -37,7 +37,7 @@ are defined:
 2. User - where all user (including root) processes are running.
 3. Machine - optional slice used for virtual machines and containers.
 
-By default, CPU capacity is uqually diveded between the slices when there is \
+By default, CPU capacity is equally divided between the slices when there is \
 high demand. \
 To temporarily shut down a CPU core, use the command:
 ```echo 0 > /sys/bus/cpu/devices/cpu1/online```
@@ -82,7 +82,7 @@ best possible latency, throughput or power consumption.
 Profile overview:
 - `balanced` - best compromise between power consumption and performance.
 - `desktop` - better response to interactive applications.
-- `latency-performace` - maximum throughput.
+- `latency-performance` - maximum throughput.
 - `network-latency` - additional options to reduce network latency.
 - `network-throughput` - optimizes older CPUs for streaming content.
 - `powersave` - maximum power saving.
@@ -90,8 +90,8 @@ Profile overview:
 - `virtual-guest` - for running as a virtual machine.
 - `virtual-host` - for use as a KVM host. 
 
-`tuned-adm` is a command used to manage performace profiles.
-- `tuned-adm active` - prints selected performace profile.
+`tuned-adm` is a command used to manage performance profiles.
+- `tuned-adm active` - prints selected performance profile.
 - `tuned-adm list` - prints overview of available profiles.
 - `tuned-adm profile [PROFILE]` - select profile.
 - `tuned-adm recommend` - prints recommended profile.
@@ -99,4 +99,6 @@ Profile overview:
 # Extra information
 ## Process forking
 
-
+- The `fork()` system call is used for creating a new process from a parent process.
+- The child processes use the same CPU registers, same open files, but different PIDs.
+- Changes in child processes don't affect parents.
