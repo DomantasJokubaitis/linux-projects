@@ -88,7 +88,7 @@ systemctl enable cockpit
 systemctl start cockpit
 ```
 To use Cockpit, you need to type `host:9090` into an internet browsers search bar (replace host with your actual host) and type in the server login details.
-
+> Make sure to add host to /etc/hosts
 ## Virtualization
 The RHCSA preperation book I'm reading (RHCSA9 Certification Guide by Sander Van Vugt) requires me to have a RHEL based distribution installed, so a decision on virtualization software was made.
 KVM/QEMU was chosen for it's near to native performance and light weight.
