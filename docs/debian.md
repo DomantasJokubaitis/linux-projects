@@ -20,12 +20,11 @@ After installing Debian and setting up an admin account, I immediately disabled 
 ```bash
 sudo systemctl set-default multi-user.target
 ```
-I believe learning the CLI is one of the most important skills an IT professional could have. It will take some time if you're used to GUI Windows and MacOS.
 A hostname and a static IP is needed to reliably SSH into the server without worrying about a changed IP:
 ```bash
 hostnamectl hostname host
 
-sudo nmcli con add type ethernet con-name eth-name ifname eno1 ip4 100.200.30.40/24 gw4 100.200.30.41 \ ipv4.dns "8.8.8.8 8.8.4.4"
+sudo nmcli con add type ethernet con-name eth-name ifname eno1 ip4 192.168.1.x/24 gw4 192.168.1.x \ ipv4.dns "8.8.8.8 8.8.4.4"
 
 nmcli con down "Wired connection 1"
 sudo nmcli con delete "Wired connection 1"
@@ -44,26 +43,26 @@ From the server:
 ```bash
 cd ~/.ssh
 ssh-keygen -t ed25519
-ssh-copy-id -i ~/.ssh/id_ed25519.pub host@100.200.30.40
+ssh-copy-id -i ~/.ssh/id_ed25519.pub host@192.168.1.x
 ```
 
-Since writing out `ssh host@100.200.30.40` every time is cumbersome, I edited the ssh config inside `~/.ssh/config`:
+Since writing out `ssh host@192.168.1.x` every time is cumbersome, I edited the ssh config inside `~/.ssh/config`:
 ```bash
-Host eve
-    Hostname host
+Host host
+    Hostname ip
     User person
     IdentityFile ~/.ssh/id_ed25519
 ```
 
-Now it's possible to SSH into the server by writing `ssh eve`
+Now it's possible to SSH into the server by writing `ssh host`
 
 ## Power tweaks
-Since a server shouldn't ever go down on it's own, any form of sleep and hibernation must be disabled:
+Since a server shouldn't ever sleep, any form of sleep and hibernation must be disabled:
 ```bash
 sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 ```
-Masking a target creates a symlink to `/dev/null`, which in turn makes a service impossible to start, contrary to disabling a service, where it's still possible to start under the right conditions.
-
+>Masking a target creates a symlink to `/dev/null`, which in turn makes a service impossible to start, contrary to disabling a service, where it's still possible to start under the right conditions.
+>
 The next action was enabling Wake on Lan in the server's BIOS and editing the eth-name profile:
 ```bash
 sudo nmcli con mod eth-name 802-3-ethernet.wake-on-lan magic
@@ -87,7 +86,7 @@ sudo apt install cockpit cockpit-machines -y
 systemctl enable cockpit
 systemctl start cockpit
 ```
-To use Cockpit, you need to type `host:9090` into an internet browsers search bar (replace host with your actual host) and type in the server login details.
+To use Cockpit, enter `host:9090` into an internet browsers search bar (replace host with your actual host) and enter the server login details.
 > Make sure to add host to /etc/hosts
 ## Virtualization
 The RHCSA preperation book I'm reading (RHCSA9 Certification Guide by Sander Van Vugt) requires me to have a RHEL based distribution installed, so a decision on virtualization software was made.
@@ -109,7 +108,7 @@ The ethernet interface should be enslaved to the bridge, and the latter needs a 
 ```bash
 sudo nmcli con add type bridge ifname br0 con-name bridge-br0
 sudo nmcli con add type ethernet ifname eno1 master br0 con-name bridge-slave-en0
-sudo nmcli con mod bridge-br0 gw4 100.200.30.41 ipv4.dns "8.8.8.8 8.8.4.4"
+sudo nmcli con mod bridge-br0 gw4 192.168.1.x ipv4.dns "8.8.8.8 8.8.4.4"
 ```
 Delete the old connection and activate the new connection:
 ```bash
