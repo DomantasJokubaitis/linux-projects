@@ -56,3 +56,7 @@ I tried changing BIOS mode to UEFI for the virtual machines, but that didn't hel
 
 I don't have the solution for now, so I'm using a fedora server installation
 for the **RHCSA** preparation.
+
+## References
+[KVM User's Guide](https://docs.oracle.com/en/operating-systems/oracle-linux/9/kvm-user/kvm-network-topicgroup.html#kvm-virtual-networks)
+[Libvirt FAQ](https://wiki.libvirt.org/FAQ.html#libvirt-faq)
