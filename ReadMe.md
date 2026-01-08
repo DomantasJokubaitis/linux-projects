@@ -15,3 +15,5 @@ This repository documents my homelab which is built on a headless Debian server.
 - Hypervisor: KVM/QEMU + libvirt + Cockpit
 - Networking: Network bridge (br0), en0 (enslaved)
 - Management: Cockpit + SSH
+
+![Fastfetch output](pictures/fastfetch.png)
