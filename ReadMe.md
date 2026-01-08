@@ -16,4 +16,4 @@ This repository documents my homelab which is built on a headless Debian server.
 - Networking: Network bridge (br0), en0 (enslaved)
 - Management: Cockpit + SSH
 
-![Fastfetch output](pictures/fastfetch.png)
+![Fastfetch output](docs/pictures/fastfetch.png)
