@@ -26,6 +26,6 @@ possible through routers.
 another.
 The network namespace is not enabled by default.
 
-**Cgroups** are a kernel feature that enables resource access limitation.
-**SELinux** secures access by using resource labels.
+- **Cgroups** are a kernel feature that enables resource access limitation.
+- **SELinux** secures access by using resource labels.
 ---
