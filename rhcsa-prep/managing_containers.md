@@ -46,3 +46,17 @@ Features of container orchestration:
 - `podman-compose up -d` to build and start a container in the background.
 
 ## Working with container images
+- `podman info` - see which registries are used.
+- `podman login` - get access to subscriber-only Red Hat registries.
+- `podman search [--filter]` - find and filter available container images.
+`podman search` output fields:
+    - INDEX
+    - NAME
+    - DESCRIPTION
+    - STARS
+    - OFFICIAL
+    - AUTOMATED
+- `skopeo inspect` - inspect an image before pulling.
+- `podman inspect` - inspect a local image.
+- `podman images` - list locally available images.
+- `podman pull` - pull an image.
