@@ -4,6 +4,7 @@
 - A container *image* is an executable package of software that includes code, runtime, system tools, system libraries and settings.
 - A container *engine* is software that allows the running of multiple containers on the same OS kernel. **CRI-o** is the container engine used in Red Hat.
 - A container *registry* can be compared to an app store, where different container images can be found. They are specified in /etc/containers/registries.conf
+- Non root container files are stored in ~/.local/share/containers/storage directory.
 ---
 
 ### Containers rely on these features:
@@ -36,5 +37,12 @@ Features of container orchestration:
 - Scalability, such that additional instances can be easily data when the workload increases.
 - Availability, ensuring that the outage of a container host doesn't result in container unavailability.
 
-## Podman commands
+## Running containers
+- Install the appropriate software using `sudo dnf install container-tools`
+- `podman run -it [image] /bin/sh` - run a container image with shell access.
+- `podman attach <name>` - attach to a running container.
+- `Ctrl-P Ctrl-Q` to detach an image.
+- `podman ps [-a]` to see an overview of running [all] containers.
+- `podman-compose up -d` to build and start a container in the background.
 
+## Working with container images
