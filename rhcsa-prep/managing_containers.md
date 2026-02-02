@@ -78,3 +78,5 @@ CMD ["/usr/sbin/nmap", "-sn", "192.168.29.0/24"]
 
 ## Managing container ports
 Rootless containers don't have network addresses because they have insufficient privileges to allocate one. To make the container accessible from the outside, port forwarding must be setup. Only ports 1025-65535 can be assigned to containers, because ports 1-1024 are accessible by root only.
+You can use `sudo podman run` to run a root container with an IP address and a privileged port.
+`podman run -p <hostport:containerport>` - run nginx container which is exposed on hostport. Don't forget to add a firewall rule for the hostport and reload the firewall.
