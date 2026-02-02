@@ -73,5 +73,8 @@ CMD ["/usr/sbin/nmap", "-sn", "192.168.29.0/24"]
 - `podman stop` - send a SIGTERM signal to a container.
 - `podman kill` - send a SIGKILL signal to a container.
 - `podman restart` - restart a currently running container.
+- `podman rm` - remove container files.
 - `podman exec` - run a second command (after container entrypoint command) inside a container.
 
+## Managing container ports
+Rootless containers don't have network addresses because they have insufficient privileges to allocate one. To make the container accessible from the outside, port forwarding must be setup. Only ports 1025-65535 can be assigned to containers, because ports 1-1024 are accessible by root only.
