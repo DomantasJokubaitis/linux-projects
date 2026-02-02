@@ -60,3 +60,18 @@ Features of container orchestration:
 - `podman inspect` - inspect a local image.
 - `podman images` - list locally available images.
 - `podman pull` - pull an image.
+- `podman rmi` - remove an image.
+- `podman build [-t <iamgename:tag .>]` - build a custom image using different instructions in a Containerfile.
+Containerfile example:
+```
+FROM registry.access.redhat.com/ubi8/ubi:latest
+RUN dnf install nmap
+CMD ["/usr/sbin/nmap", "-sn", "192.168.29.0/24"]
+```
+
+## Managing containers
+- `podman stop` - send a SIGTERM signal to a container.
+- `podman kill` - send a SIGKILL signal to a container.
+- `podman restart` - restart a currently running container.
+- `podman exec` - run a second command (after container entrypoint command) inside a container.
+
