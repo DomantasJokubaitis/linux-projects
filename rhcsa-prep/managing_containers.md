@@ -74,9 +74,18 @@ CMD ["/usr/sbin/nmap", "-sn", "192.168.29.0/24"]
 - `podman kill` - send a SIGKILL signal to a container.
 - `podman restart` - restart a currently running container.
 - `podman rm` - remove container files.
+- `podman logs` - see container logs.
 - `podman exec` - run a second command (after container entrypoint command) inside a container.
+`podman run -e <env>` - run a container with environment variables.
 
 ## Managing container ports
 Rootless containers don't have network addresses because they have insufficient privileges to allocate one. To make the container accessible from the outside, port forwarding must be setup. Only ports 1025-65535 can be assigned to containers, because ports 1-1024 are accessible by root only.
 You can use `sudo podman run` to run a root container with an IP address and a privileged port.
 `podman run -p <hostport:containerport>` - run nginx container which is exposed on hostport. Don't forget to add a firewall rule for the hostport and reload the firewall.
+
+## Managing container storage
+- `podman run -v <host_dir:container_dir:Z` - attach storage to a container. The user who runs the container has to have ownership of the host_dir, write permission is not enough.
+- `podman unshare` - run commands inside the container namespace. For example, `podman unshare chown 27:27 <db>` 
+## Running containers as systemd services
+
+Containers can be autostarted by generating systemd files with `podman generate systemd --name <containername> --files`. After that, the new unit files need to be enabled using `systemctl --user enable container.mycontainer.service`. By default, they would autostart when the user (container owner) start a session. It's possible to change this behaviour by using `loginctl enable-linger <user>`. When linger is enabled, systemd services that are enabled for that user will be started on system start, not on user session start.
