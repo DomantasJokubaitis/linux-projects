@@ -23,8 +23,12 @@ The last location has the highest importance, since it overwrites any setting de
     - [Unit]: describes the unit and defines dependencies. Also contains *After* and *Before* statements, which indicite if the unit should be started before specified units, or after.
     - [Service]: describes how to start and stop the service and request status installation. `man 5 systemd.service` for more details.
     - [Install] indicates in which target this unit has to be started. Units that don't have this section cannot be started automatically.
-### Mount units
 
+### Mount units
+- Specifies how a file system can be mounted on a specific directory.
+- Main configuration options:
+    - [Unit]: *conflicts* statement is used to list units that cannot be used together with this unit.
+    - [Mount]: defines where the mount has to be performed.
 
 ### Socket units
 
