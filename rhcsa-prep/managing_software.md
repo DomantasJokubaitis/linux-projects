@@ -19,6 +19,7 @@ of multiple packages for a specific use case, for example: *c-development*.
 - `dnf history rollback [id]` - undoes all transactions performed after a specified transaction.
 - `dnf autoremove` - removes packages that are not needed.
 - `dnf clean all` - cleans cached files and metadata.
+- `apropos dnf` - find man pages related to dnf.
 
 ## DNF module terminology
 - A **module** describes a set of RPM packages that belong together.
