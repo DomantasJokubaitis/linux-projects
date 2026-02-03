@@ -12,6 +12,8 @@
 - `dnf repolist` - shows which repositories are in use.
 - `dnf repoquery --list [package]` - lists all files included in package.
 - `dnf repoquery --requires [package]` - lists dependencies of a package.
+- `dnf repoquery --installed-from-repo=<repoID>` - filters installed packages by the ID of the repository they were installed from.
+- `dnf config-manager` - manages main configuration, repositories configuration and variables.
 - `dnf group {list (hidden)} {install | info [package]` - allows the installation \
 of multiple packages for a specific use case, for example: *c-development*.
 - `dnf history {list | info}` - lists | shows info about transactions.
