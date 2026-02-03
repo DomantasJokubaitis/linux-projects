@@ -7,7 +7,8 @@ Most prevalent units:
 - Socket
 - Target
 - Mount
-`systemctl -t help` displays a full list of units.
+- `systemctl -t help` - displays a full list of units.
+- `systemctl -t <unit> - displays all entries of a unit type.
 
 ## System unit locations
 - **/usr/lib/systemd/system**: contains default unit files that have been installed from RPM packages. Never edit these files directly.
@@ -31,7 +32,9 @@ The last location has the highest importance, since it overwrites any setting de
     - [Mount]: defines where the mount has to be performed.
 
 ### Socket units
-
+- A *socket* creates a method for applications to communicate with one another.
+- A socket may be defined as a file but also as a port on which Systemd will be listening for incoming connections. Services will only start if a connection is coming in on the socket that is specified. Every socket needs a corresponding service file.
+- Options ListenStream and ListenDatagram define TCP and UDP ports respectively.
 
 ### Target units
 
