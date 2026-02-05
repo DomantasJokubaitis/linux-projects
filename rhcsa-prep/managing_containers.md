@@ -20,13 +20,13 @@
 - Interprocess communication - is what processes use to connect to one another.
 The network namespace is not enabled by default.
 
-**Cgroups** are a kernel feature that enables resource access limitation.
+**Cgroups** are a kernel feature that enables resource access limitation for process groups.
 **SELinux** secures access by using resource labels.
 
 ## Containers on RHEL9
-Red Hat uses the CRI-o container runtime and podman as the main tool to run containers.
-Contrary to Docker, podman uses rootless containers, they run in a user namespace and don't need a daemon to work. Rootless containers do not have IP addresses.
-
+- Red Hat uses the CRI-o container runtime and podman as the main tool to run containers.
+- Contrary to Docker, podman uses rootless containers, they run in a user namespace and don't need a daemon to work. Rootless containers do not have IP addresses.
+- Both Docker and podman follow the Open Container Initiative (OCI). It's primary goal is to ensure the compatibility and interoperability of container environments through defined technical specifications.
 ## Container orchestration
 *Kubernetes* is the most popular container orchestration tool. Red Hat uses *OpenShift*, a Kubernetes distribution.
 
@@ -42,7 +42,7 @@ Features of container orchestration:
 - `podman run -it [image] /bin/sh` - run a container image with shell access.
 - `podman attach <name>` - attach to a running container.
 - `Ctrl-P Ctrl-Q` to detach an image.
-- `podman ps [-a]` to see an overview of running [all] containers.
+- `podman ps [-a] | podman container ls [-a]` to see an overview of running containers.
 - `podman-compose up -d` to build and start a container in the background.
 
 ## Working with container images
@@ -58,8 +58,8 @@ Features of container orchestration:
     - AUTOMATED
 - `skopeo inspect` - inspect an image before pulling.
 - `podman inspect` - inspect a local image.
-- `podman images` - list locally available images.
-- `podman pull` - pull an image.
+- `podman images | podman image ls` - list locally available images.
+- `podman pull` - pull an image from a registry.
 - `podman rmi` - remove an image.
 - `podman build [-t <iamgename:tag .>]` - build a custom image using different instructions in a Containerfile.
 Containerfile example:
