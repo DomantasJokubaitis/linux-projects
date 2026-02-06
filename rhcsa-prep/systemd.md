@@ -46,7 +46,11 @@ The last location has the highest importance, since it overwrites any setting de
 ## Managing units
 - `systemctl status <unit>` - check unit status.
 - `systemctl start <unit>` - start a unit.
+- `systemctl stop <unit>` - stop a unit.
 - `systemctl enable <unit>` - create a symlink in the wants directory for the multiuser target for the service to automatically start on boot.
+- `systemctl disable <unit>` - unit won't be started on boot.
+- `systemctl (un)mask <unit>` - creates a symlink from /etc/systemd/system to /dev/null, the the service can never be started.
+
 Diffrent statuses:
     - **Loaded**: unit file has been processed and the unit is active.
     - **Active(running)**: unit is running with one or more active processes.
@@ -58,6 +62,23 @@ Diffrent statuses:
     - **Static**: unit cannot be enabled but may be started by another unit automatically.
 
 ## Unit overview commands
+- `systemctl -t service` - shows only active service units.
+- `systemctl list-units -t service` - same as previous command.
+- `systemctl list-units -t service --all` - shows active and inactive service units.
+- `systemctl --failed -t service` - shows all services that have failed.
+- `systemctl status -l <service>` - shows detailed status info about services.
+
+## Dependency management
+- `systemctl list-dependencies [--reverse] <unit>` - shows unit dependencies \[dependendent units].
+Unit dependency types:
+    - **Requires**: if this unit loads, units listed in this \[unit] section will load also. If one of the other units is deactivated, this unit will also be deactivated.
+    - **Requisite**: if the unit listed here is not already loaded, this unit will fail.
+    - **Wants**: this unit wants to load the units that are listed here, but it will not fail if any of the listed units fail.
+    - **Before**: this unit will start before units specified here.
+    - **After**: this unit will start after the unit specified here.
+
+## Managing unit options
+
 
 
 
