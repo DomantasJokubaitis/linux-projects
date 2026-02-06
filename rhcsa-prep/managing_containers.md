@@ -4,6 +4,7 @@
 - A container *image* is an executable package of software that includes code, runtime, system tools, system libraries and settings.
 - A container *engine* is software that allows the running of multiple containers on the same OS kernel. **CRI-o** is the container engine used in Red Hat.
 - A container *registry* can be compared to an app store, where different container images can be found. They are specified in /etc/containers/registries.conf
+- A container *file* is a text file containing commands to build an image.
 - Non root container files are stored in ~/.local/share/containers/storage directory.
 ---
 
@@ -60,7 +61,7 @@ Features of container orchestration:
 - `podman inspect` - inspect a local image.
 - `podman images | podman image ls` - list locally available images.
 - `podman pull` - pull an image from a registry.
-- `podman rmi` - remove an image.
+- `podman rmi | podman image rm` - remove an image.
 - `podman build [-t <iamgename:tag .>]` - build a custom image using different instructions in a Containerfile.
 Containerfile example:
 ```
@@ -73,7 +74,7 @@ CMD ["/usr/sbin/nmap", "-sn", "192.168.29.0/24"]
 - `podman stop` - send a SIGTERM signal to a container.
 - `podman kill` - send a SIGKILL signal to a container.
 - `podman restart` - restart a currently running container.
-- `podman rm` - remove container files.
+- `podman rm | podman container rm` - remove container files.
 - `podman logs` - see container logs.
 - `podman exec` - run a second command (after container entrypoint command) inside a container.
 `podman run -e <env>` - run a container with environment variables.

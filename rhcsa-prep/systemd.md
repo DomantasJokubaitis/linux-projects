@@ -42,8 +42,20 @@ The last location has the highest importance, since it overwrites any setting de
 - **basic.target** defines all the units that should always be started.
 - `systemctl list-dependencies <unit>` to overview any existing dependencies.
 - When enabling a unit, the [Install] section of that unit is considered to determine to which target the unit should be added. When you add a unit to a target, a symbolic link is created in the target directory in **/etc/systemd/system**.
-## Systemd status
 
+## Managing units
+- `systemctl status <unit>` - check unit status.
+- `systemctl start <unit>` - start a unit.
+- `systemctl enable <unit>` - create a symlink in the wants directory for the multiuser target for the service to automatically start on boot.
+Diffrent statuses:
+    - **Loaded**: unit file has been processed and the unit is active.
+    - **Active(running)**: unit is running with one or more active processes.
+    - **Active(exited)**: unit has successfully completed a one-time run.
+    - **Active(waiting)**: unit is running and waiting for an event.
+    - **Inactive(dead)**: unit is not running.
+    - **Enabled**: unit will be started at boot time.
+    - **Disabled**: unit will not be started at boot time.
+    - **Static**: unit cannot be enabled but may be started by another unit automatically.
 
 ## Unit overview commands
 
