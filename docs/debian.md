@@ -6,19 +6,15 @@ The goal of this project is simple: make an old laptop into a usable server/home
 2. Act as storage for automated backups (mobile phone, laptop, personal computer)
 3. Host media (photos for now)
 
-## Hardware problems
-The homelab contains a 120GB SSD, which is very small for todays standarts, especially for a server.
-The 750GB HDD is more than a decade old and isn't reliable enough to hold data.
-8GB of DDR3 RAM is only enough for about 3 virtual machines.
-
 ## Distro history
 Debian13 was the distribution of choice. The server previously experienced Windows 7, 10, 11 and Fedora Linux 40-42.
 Debian was chosen for it's well known stability, and to widen my personal knowledge after experience in only fedora based distros and a short experience with Arch.
 
 ## First steps
-After installing Debian and setting up an admin account, I immediately disabled the Gnome GUI using the command below.
+Set up an admin account, disable the Gnome desktop environment:
 ```bash
 sudo systemctl set-default multi-user.target
+sudo reboot now
 ```
 A hostname and a static IP is needed to reliably SSH into the server without worrying about a changed IP:
 ```bash
@@ -61,7 +57,6 @@ Since a server shouldn't ever sleep, any form of sleep and hibernation must be d
 ```bash
 sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 ```
->Masking a target creates a symlink to `/dev/null`, which in turn makes a service impossible to start, contrary to disabling a service, where it's still possible to start under the right conditions.
 >
 The next action was enabling Wake on Lan in the server's BIOS and editing the eth-name profile:
 ```bash
@@ -76,6 +71,9 @@ sudo dnf install ether-wake
 #!/bin/bash
 sudo ether-wake -D a1:b2:c3:d4:e5:f6
 ```
+Disabling the laptop screen:
+```sudo vim /etc/default/grub```
+```GRUB_CMDLINE_LINUX_DEFAULT="quiet consoleblank=60"```
 
 ## Cockpit
 Cockpit is a server monitoring tool which shows general system information, performance metrics, virtual machines, etc.
@@ -88,3 +86,7 @@ systemctl start cockpit
 ```
 To use Cockpit, enter `host:9090` into an internet browsers search bar (replace host with your actual host) and enter the server login details.
 > Make sure to add host to /etc/hosts
+
+## References
+[Disable laptop screen](https://gist.github.com/tankibaj/71547848decdd7cc3bf0c6df68935c8f)
+

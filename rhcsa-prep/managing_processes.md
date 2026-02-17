@@ -24,21 +24,19 @@
 - `jobs` - shows which jobs are running from the current shell.
 ## The ps command
 
-The most common command to get an overview of currently running \
+The most common command to get an overview of currently running
 processes is `ps`. Most notable flags:
 - `ps -aux` - short summary of active processes.
 - `ps -ef` - shows command that was used to start the process.
 - `ps -fax` - shows hierarchical relationships between parent and child processes.
 ## Cgroups
 
-Cgroups are used to allocate system resources. Three system ares, or slices, \
-are defined:
+Cgroups are used to allocate system resources. Three system ares, or slices, are defined:
 1. System - where all systemd-managed processes are running.
 2. User - where all user (including root) processes are running.
 3. Machine - optional slice used for virtual machines and containers.
 
-By default, CPU capacity is equally divided between the slices when there is \
-high demand. \
+By default, CPU capacity is equally divided between the slices when there is high demand.
 To temporarily shut down a CPU core, use the command:
 ```echo 0 > /sys/bus/cpu/devices/cpu1/online```
 Replace the number for the CPU core you want to shut down.
@@ -51,7 +49,7 @@ By default, processes are started with priority number 20.
 ## Killing processes
 
 `kill <PID>` command is used to send a signal to a process.
-`killall` is used to send signals to processes using the same name. \
+`killall` is used to send signals to processes using the same name.
 Most common `kill` values:
 1. SIGTERM (15) to ask a process to stop.
 2. SIGKILL (9) to force a process to stop.
@@ -62,22 +60,22 @@ Zombie processes have completed execution but are still listed in the process ta
     - Can be removed by sending SIGCHLD or SIGKILL to their parents.
 ## Top and other information commands
 
-`top` is a tool to overview and manage processes. It shows process states, \
+`top` is a tool to overview and manage processes. It shows process states,
 which are as follows:
 1. Running (R)
 2. Sleeping (S)
 3. Uninterruptible sleep (D)
 4. Stopped (T)
 5. Zombie (Z)
-It Has useful keybinds, such as `k` for `kill` and `r` for `renice`.
+
+`top` has useful keybinds, such as `k` for `kill` and `r` for `renice`.
 
 Other commands include:
 - `lscpu` prints cpu information.
 - `uptime` prints current load average statistics.
 ## Tuned
 
-`tuned` offers a daemon that monitors system activity and provides profiles for \
-best possible latency, throughput or power consumption.
+`tuned` offers a daemon that monitors system activity and provides profiles for best possible latency, throughput or power consumption.
 
 Profile overview:
 - `balanced` - best compromise between power consumption and performance.

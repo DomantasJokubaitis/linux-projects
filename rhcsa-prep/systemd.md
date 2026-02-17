@@ -75,9 +75,13 @@ Unit dependency types:
     - **Requisite**: if the unit listed here is not already loaded, this unit will fail.
     - **Wants**: this unit wants to load the units that are listed here, but it will not fail if any of the listed units fail.
     - **Before**: this unit will start before units specified here.
-    - **After**: this unit will start after the unit specified here.
+    - **After**: this unit will start after the units specified here.
 
 ## Managing unit options
+- `systemctl show <unit>` - show unit properties.
+- `systemctl cat <unit>` - view the contents of a unit file.
+- `systemctl edit <unit>` - edit unit properties.
+- `systemctl daemon-reload` - reload the system manager configuration.
 
 
 

@@ -43,20 +43,35 @@ sudo virsh net-list all
 I ran into a problem where the virtual machines refused to start because of non-descriptive network errors.
 The solution was to edit the xml mentioned before, and delete any other network sections that it has. Redefine after this step. 
 
-Another problem that I encountered - all of the created vm's would either
-loop in the GRUB screen or would freeze after "succesfully" booting.
-The fix I found was to redefine the default storage pool. The default pool has too little space for one virtual machine.
-To set a new default storage pool, read [this](https://serverfault.com/questions/840519/how-to-change-the-default-storage-pool-from-libvirt).
+### Setting a new default storage pool
+Find and remove the default pool:
+```bash
+sudo virsh pool-list
+sudo virsh pool-destroy <default>
+sudo virsh pool-undefine <default>
+```
+Define a new pool:
+```bash
+sudo virsh pool-define-as --name <name> --type dir --target <target_dir>
+sudo virsh pool-autostart <name>
+sudo virsh pool-start <name>
+```
 
-To summarize, you just need to define the non-default storage pool as the default via
-`virsh pool-define-as`.
+## Backups
+1. After starting guests, find the image to backup:
+```sudo virsh domblklist <guest>```
+2. Backup the image:
+```sudo virsh backup-begin <guest>```
+```sudo virsh domjobinfo <guest> --completed```
+3. Transfer the backup:
+```sudo rsync -aPhW /path/to/backup.qcow2 user@ip:/path/to/location/```
 
-Unfortunately no RHEL-based distros, including CentOS, AlmaLinux, RockyLinux work as virtual machines.
-I tried changing BIOS mode to UEFI for the virtual machines, but that didn't help.
-
-I don't have the solution for now, so I'm using a fedora server installation
-for the **RHCSA** preparation.
+## Vm distros
+The Intel 3210m doesn't support the x86_64v3 architecture required by newer RHEL releases. The solution is to use distributions supporting the x86_64v2 architecture (e.g. RHEL9)
 
 ## References
 [KVM User's Guide](https://docs.oracle.com/en/operating-systems/oracle-linux/9/kvm-user/kvm-network-topicgroup.html#kvm-virtual-networks)
 [Libvirt FAQ](https://wiki.libvirt.org/FAQ.html#libvirt-faq)
+[Virsh storage pools](https://serverfault.com/questions/840519/how-to-change-the-default-storage-pool-from-libvirt)
+[Image backup](https://www.libvirt.org/kbase/live_full_disk_backup.html)
+
