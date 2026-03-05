@@ -51,10 +51,23 @@
 ![collapsed](content/collapsed_topology.png)
 
 - Core and distribution layers are combined.
+- Cheaper, simpler, more efficient communication and good scalability for mid-sized data centers.
+- Limited redundancy, not scalable enough for big data centers, potential bottlenecks.
 # Bus
+![bus](content/bus_topology.png)
 
+- Uses a trunk or a backbone to connect all the computers on the network.
+- Connected via T connectors.
+- Each end of the physical bus must be terminated, and one must be grounded.
+- Cheap and easy to implement.
+- Break in the cable prevents all the systems from accessing the network, difficult to troubleshoot, expansion disrupts the network.
 # Ring
+![ring](content/ring_topology.png)
 
+- Logical ring, the data travels in a circular fashion.
+- Can be setup using two rings for better fault tolerance.
+- Easy to install and troubleshoot.
+- Single break in the cable can disrupt the entire network, expansion disrupts the network.
 # Traffic flows
-- North-south traffic refers to data flowing into or out of a server or datacenter, for example accessing cloud services, browsing the internet.
+- North-south traffic refers to data flowing into or out of a server or data center, for example accessing cloud services, browsing the internet.
 - East-west traffic relates to the traffic flow between internal resources within a network, such as inter-server communication, database queries.

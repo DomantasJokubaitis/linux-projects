@@ -81,6 +81,7 @@ Unit dependency types:
 - `systemctl show <unit>` - show unit properties.
 - `systemctl cat <unit>` - view the contents of a unit file.
 - `systemctl edit <unit>` - edit unit properties.
+- `export SYSTEMD_EDITOR="/bin/vim"` to ~/.bashrc to make vim the default systemd editor.
 - `systemctl daemon-reload` - reload the system manager configuration.
 
 
