@@ -1,19 +1,18 @@
 # Debian Homelab
+This repository documents my experience with Linux, virtualization, networking and containerization inside a homelab.
 
-This repository documents my homelab which is built on a headless Debian server. \
-**Included**: system configuration, virtualization setup, networking, troubleshooting.
+## Technologies used
+- Linux (Debian, Red Hat)
+- KVM/QEMU virtualisation
+- Nginx
+- Podman / Docker
+- Networking
 
-## Contents
-- `docs` - Server documentation
-- `rhcsa-prep` - Notes for the RHCSA
-
-## Server Overview
-- CPU: Intel i5 3210m
-- RAM: 8gb DDR3
-- Storage: 120GB ssd
-- OS: Debian 13 (headless)
-- Hypervisor: KVM/QEMU + libvirt + Cockpit
-- Networking: Network bridge (br0), en0 (enslaved)
-- Management: Cockpit + SSH
+## What I worked on
+- Deploying, managing and troubleshooting virtual machines using KVM/QEMU
+- Running a local DNS server using Unbound
+- Running services in Podman containers
+- Setting up and configuring an Nginx web server
+- Setting up remote access with Tailscale ssh
 
 ![Fastfetch output](docs/pictures/fastfetch.png)
